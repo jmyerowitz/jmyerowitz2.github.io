@@ -15,7 +15,7 @@ So this link:
 ![Image](https://github.com/jmyerowitz/jmyerowitz.github.io/blob/master/images/Alltrails1.PNG)
 
 Gets me all this information:
-![Image](https://github.com/jmyerowitz/jmyerowitz.github.io/blob/master/images/Alltrails2.PNG)
+![Image1](https://github.com/jmyerowitz/jmyerowitz.github.io/blob/master/images/Alltrails2.PNG)
 
 You probably noticed a trail map of all the trails. I originally went to that map link to try and find latitude and longitude coordinates. Needless to say, I was unsuccessful in that endeavor. But I hit a lucky break: hidden away in the html source code of each link page are the latitude and longitude coordinates for the start of each trail. Here's come example scode for how I pulled the links from the sidebar and pulled the relevant information from each link. 
 
