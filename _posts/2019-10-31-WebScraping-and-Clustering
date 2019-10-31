@@ -4,6 +4,22 @@ title: "Clustering Similar New Hampshire Trails via WebScraping"
 date: 2019-10-31
 ---
 
-Recently, my Master's program (UNH Analytics and Data Science, represent!) had a small module on webscraping using R via Rvest and Selenium. I looked at a website called [alltrails.com](https://www.alltrails.com). It's a really handy site for information on trails all around the world. I've only used it locally for New England trails, but I've seen trails in Spain pop up as well.
+Recently, my Master's program (UNH Analytics and Data Science, represent!) had a small module on webscraping using R via Rvest. I looked at a website called [alltrails.com](https://www.alltrails.com). It's a really handy site for information on trails all around the world. I've only used it locally for New England trails, but I've seen trails in Spain pop up as well.
 
 I'm an avid hiker. I'm originally from Maine, so I wanted to get a feel for the different trails in New Hampshire. New Hampshire has trails that range from a nice stroll to a strenuous hike up Mt. Washington. I had the thought that it would be cool to pick new trails based off the characteristics of previous trails that I had hiked--sounds like a good opportunity to cluster! 
+
+As is good web-scraping practice, I checked out the robots.txt file for the website. Some things were off limits for me, such as the website APIs and user info. But that's alright, I only want information about the trails! Specifically, New Hampshire trails. I accessed the information needed from this specific [webpage](https://www.alltrails.com/us/new-hampshire). On the right of the page is a loading bar for the best trails in New Hampshire, ranked from best to worst by the members of the alltrails community. Using RSelenium, it would be possible to load all the links via clicking the "Load" button repeatedly. Admittingly, I did not do this.
+
+One day I'll feel comfortable with RSelenium. For now though, I manually loaded the webpage side scroll and saved it to my local machine. From this local file, I scraped the links that would lead me to each individual trails site and the information that I needed.  
+So this: 
+
+
+#Setting object to pipe through for trail urls
+currentpage <- alltrails
+
+#Piping through for the url of each trail that I want
+trail_links <- currentpage %>%
+  html_nodes("li.sortable") %>% #Going through each "sortable" node that's a trail
+  html_nodes("a.item-link") %>% #going to that trail link
+  html_attr("href") #pull the individual trail link
+trail_links
