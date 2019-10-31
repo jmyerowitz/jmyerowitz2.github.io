@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Clustering Similar New Hampshire Trails via WebScraping"
+date: 2019-10-31
+---
+
+Recently, my Master's program (UNH Analytics and Data Science, represent!) had a small module on webscraping using R via Rvest and Selenium. I looked at a website called [alltrails.com](https://www.alltrails.com). It's a really handy site for information on trails all around the world. I've only used it locally for New England trails, but I've seen trails in Spain pop up as well.
+
+I'm an avid hiker. I'm originally from Maine, so I wanted to get a feel for the different trails in New Hampshire. New Hampshire has trails that range from a nice stroll to a strenuous hike up Mt. Washington. I had the thought that it would be cool to pick new trails based off the characteristics of previous trails that I had hiked--sounds like a good opportunity to cluster! 
