@@ -12,10 +12,10 @@ As is good web-scraping practice, I checked out the robots.txt file for the webs
 
 One day I'll feel comfortable with RSelenium. For now though, I manually loaded the webpage side scroll and saved it to my local machine. From this local file, I scraped the links that would lead me to each individual trails site and the information that I needed.  
 So this link: 
-![Image](https://github.com/jmyerowitz/jmyerowitz.github.io/blob/master/images/Alltrails1.PNG)
+![Image](https://github.com/jmyerowitz/jmyerowitz.github.io/blob/master/images/Alltrails1.PNG){:height="50%" width="50%"}
 
 Gets me all this information:
-![Image1](https://github.com/jmyerowitz/jmyerowitz.github.io/blob/master/images/Alltrails2.png)
+![Image1](https://github.com/jmyerowitz/jmyerowitz.github.io/blob/master/images/Alltrails2.png){:height="50%" width="50%"}
 
 You probably noticed a trail map of all the trails. I originally went to that map link to try and find latitude and longitude coordinates. Needless to say, I was unsuccessful in that endeavor. But I hit a lucky break: hidden away in the html source code of each link page are the latitude and longitude coordinates for the start of each trail. Here's come example scode for how I pulled the links from the sidebar and pulled the relevant information from each link. 
 
