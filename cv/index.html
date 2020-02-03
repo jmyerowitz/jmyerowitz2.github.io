@@ -5,7 +5,7 @@ title: Jordan Myerowitz's CV
 	<h1>{{ page.title }}</h1>
 	<ul class="cv">
 
-	  {% for post in site.posts %}
-	    <li><span>{{ post.date | date_to_string }}</span> » <a href="{{ cv.url }}" title="{{ cv.title }}">{{ cv.title }}</a></li>
+	  {% for cv in site.cv %}
+	    <li><span>{{ cv.date | date_to_string }}</span> » <a href="{{ cv.url }}" title="{{ cv.title }}">{{ cv.title }}</a></li>
 	  {% endfor %}
 	</ul>
