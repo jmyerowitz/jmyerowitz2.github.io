@@ -103,17 +103,77 @@ library(plotly)
 library(ggplot2)
 library(leaflet)
 
-So the first step is to always definte the UI for the application. [This cheat sheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) is super helpful for finding your way for RShiny. 
+So the first step is to always definte the UI for the application. [This cheat sheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) is super helpful for finding your way for RShiny. [Shinythemes](https://rstudio.github.io/shinythemes/) allows you to easily code a theme to your pleasing--they have several themes to choose from.
 
-# Define UI for application
+I used a fluidPage for a UI (see below). As a forewarning, the following code will  be incomplete as it's very long and I don't want to show everything. I wouldn't want to give up my trade secrets just yet!
+#Define UI for application
     ui <- fluidPage(
 
+I ended up choosing the theme "cerulean," and the below code selects it for me!
 #Selecting theme
     
     theme = shinytheme("cerulean"),
     
-    #Title Page
-    titlePanel("An In-Depth Look Into Maine and New Hampshire Hiking Trails"),
+Below is an example of my sidebar and how the widgets in the Shiny App will be used to create a reactive dataframe that is graphed by Plotly. 
+#Sidebar
+
+                        sidebarPanel(
+                            h3("How to Use the Widgets"),
+                            helpText("Select your inputs below in order to",
+                                     "find and visualize trails across",
+                                     "New Hampshire and Maine"),
+                            radioButtons(inputId = "state", h3("Select State"), 
+                                         choices = list("New Hampshire", "Maine"), selected = "New Hampshire"),
+                            checkboxGroupInput(inputId = "cluster", h3("Cluster Selection"), choices = c(0,1,2,3,4,5,6), 
+                                               selected = c(0,1,2,3,4,5,6)),
+                            selectInput(inputId = "difficulty", h3("Trail Difficulty"), 
+                                        choices = list("Easy", "Moderate", "Hard"), selected = "Easy"),
+                            checkboxGroupInput("checkGroup2", h3("Route Type"),
+                                               choices = list("Loop", "Out & Back", "Point to Point"), selected = "Loop"),
+                            sliderInput("slider1", h3("Elevation (feet)"), min = 0, max = 46000, value = 46000),
+                            sliderInput("slider2", "Distance (miles)", min = 0, max = 170, value = 170),
+                            actionButton("submit", "Apply Changes", icon("refresh"))
+                        ),
+                        
+In the server function, I have a dataframe that reacts to the above widgets and is used to display those filtered trails as graphs.
+
+    #Creating reactive dataframe that works with widgets input 
+    df <- eventReactive(input$submit, {
+        filter(traildf, State == input$state, Difficulty == input$difficulty, Route_Type == input$checkGroup2, 
+               Cluster_number == input$cluster, Elevation_Feet <= input$slider1, Distance_Miles <= input$slider2)
+         
+    })
     
-    #Navigation Bar
-    navbarPage("Options",
+Pretty neat, huh? You can think of the UI (or user interface) as the aesthetic design for the app, while the server function is the meat and potatoes code that gets the pretty graphs working. 
+
+Below is an example of a leaflet map with a borrowed image from [flaticon](https://www.flaticon.com/authors/freepik). Show them some love--they have some really useful icons for any leaflet maps that you want to make!
+
+    #Defining icon use
+    hikingIcon <- makeIcon(
+        iconUrl = "https://image.flaticon.com/icons/svg/71/71423.svg",
+        iconWidth = 20, iconHeight = 30,
+    )
+    
+    #Defining rank as a character so that is can be shown via pop-up
+    traildf$Rank <-as.character(traildf$Rank)
+    
+    #Leaflet as same trails as above, but with rank
+    output$filteredleaflethiking <-renderLeaflet({
+        leaflet(df()) %>%
+        addTiles() %>%
+        addMarkers(lng= ~Longitude, lat= ~Latitude, icon = hikingIcon, popup = ~Rank)
+    })
+    
+The output name is also in the UI (wherever you want to put it). Below is where mine is (as defined by leafletOutput("filteredleaflethiking). 
+
+                                tabPanel("Mapping the Filtered Trails",
+                                         h3("Trails with Their Description"),
+                                         h4("This tab can be fitlered, so filter away!"),
+                                         h5("Icons made by", a("https://www.flaticon.com/authors/freepik")),
+                                         leafletOutput("filteredleaflet"),
+                                         h5("Trails with Their Rank"),
+                                         leafletOutput("filteredleaflethiking")),
+                                         
+You'll notice that I have two leaflet outputs in the above code, and that's true! I do have two leaflet maps in my shiny app that show up together.  
+
+If you're interested in seeing more code from the app, let me know and I can write more about it! Until next time!
