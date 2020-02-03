@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Clustering Similar New Hampshire Trails via WebScraping"
+title: "Creating a Shiny App via R with Web-Scraped Trails"
 date: 2020-02-02
 ---
 
